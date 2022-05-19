@@ -1,19 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+ <!-- <personal-page></personal-page> -->
+ <home-page></home-page>
+ <!-- <LoginWindow></LoginWindow> -->
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
+<script>
+
+import PersonalPage from './components/PersonalPage.vue'
+import HomePage from './components/HomePage.vue'
+// import LoginWindow from './components/tabs/LoginWindow.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    PersonalPage,
+    HomePage
+    // LoginWindow
+  },
+  data() {
+    return {
+    }
+  },
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -21,6 +30,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  
 }
+
+@import './style/container.css'
 </style>

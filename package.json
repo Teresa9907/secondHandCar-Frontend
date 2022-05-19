@@ -8,8 +8,22 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@antv/g2": "^4.2.0",
+    "@antv/g2plot": "^2.4.16",
+    "@element-plus/icons-vue": "^1.1.4",
+    "axios": "^0.26.1",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "echarts": "^5.3.2",
+    "element-plus": "^2.1.2",
+    "elui-china-area-dht": "^2.0.0",
+    "form-data": "^4.0.0",
+    "mockjs": "^1.1.0",
+    "pinia": "^2.0.13",
+    "viser-vue": "^2.4.8",
+    "vue": "^3.0.0",
+    "vue-axios": "^3.4.1",
+    "vue-i18n": "^9.2.0-beta.35",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.13",
@@ -17,6 +31,7 @@
     "@vue/cli-service": "~4.5.13",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-component": "^1.1.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0"
   },
@@ -32,7 +47,10 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "vue/no-unused-components": "off",
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",
