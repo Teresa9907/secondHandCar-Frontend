@@ -21,7 +21,9 @@ export default createStore({
       },
       create_id: '128',
       his2info: Object,
-      historys: History.history,
+      // historys: History.history,
+      historys: '',
+      recons: '',
       responses: Object,
       loginState: false,
       userName: '请登录',
@@ -42,6 +44,9 @@ export default createStore({
   },
   // 在其他视图中通过 $store.commit('setState', 10) 使用，用于修改stor存的值
   mutations: {
+    setRecons(state,recons){
+      state.recons=recons
+    },
     setcreate_id(state,id){
       state.create_id=id
     },

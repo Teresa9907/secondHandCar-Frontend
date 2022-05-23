@@ -6,12 +6,12 @@
                 <img style="width: 100px; height: 100px; object-fit: contain" :src='url' />
             </el-col>
             <el-col :span="6" :offset="1">
-                <p style="font-size: 14px; height: 10px"><b>{{this.store.state.responses.car_data.brand}}</b></p>
-                <p style="font-size: 14px; height: 6px">{{this.store.state.responses.car_data.road_time.slice(0,4)}}年{{Number(this.store.state.responses.car_data.road_time.slice(5,7))}}月上牌  行驶里程{{this.store.state.responses.car_data.km}}万公里</p>
-                <p style="font-size: 14px; height: 6px">{{this.store.state.responses.car_data.location}}</p>   
+                <p style="font-size: 14px; height: 10px"><b>{{cv(this.store.state.responses.car_data.brand)}}</b></p>
+                <p style="font-size: 14px; height: 6px">{{this.store.state.responses.car_data.road_time.slice(0,4)}}{{this.store.state.responses.car_data.road_time.slice(5,7)}} Licensed with {{this.store.state.responses.car_data.km}}km on the clock</p>
+                <p style="font-size: 14px; height: 6px">{{this.pinyinF(this.store.state.responses.car_data.location)}}</p>   
             </el-col>
-             <el-col :span="1"  style="margin-top: 3% ">
-                  <el-button type="primary" @click="changeInfo">修改信息</el-button> 
+             <el-col :span="1" :offset="1"  style="margin-top: 3% ">
+                  <el-button type="primary" @click="changeInfo">revise</el-button> 
             </el-col>
         </el-row>
     </div>
@@ -19,8 +19,8 @@
 <!-- 顶部分割线 -->
     <div>
          <el-row>
-            <el-col :span="8" :offset="7" style="font-size: 20px">
-                <el-divider content-position="center"><b>估值报告</b></el-divider>
+            <el-col :span="10" :offset="6" style="font-size: 20px">
+                <el-divider content-position="center"><b>History Reconmendations</b></el-divider>
             </el-col>
          </el-row>       
     </div>
@@ -34,7 +34,7 @@
                             <img style="width: 60px; height: 60px; object-fit: cover" :src='urlB' />
                         </el-col>
                         <el-col :span="12" :offset="10" style="margin-top: -15px; margin-left: 60px">
-                            <p style="font-size: 14px; height: 6px">车况好</p>
+                            <p style="font-size: 14px; height: 6px">Good Condition</p>
                             <p style="font-size: 25px; height: 6px; color: #F09E18">{{(store.state.responses.car_data.price*1.03).toFixed(2)}}</p>   
    
                         </el-col>
@@ -46,7 +46,7 @@
                             <img style="width: 60px; height: 60px; object-fit: cover" :src='urlM' />
                         </el-col>
                         <el-col :span="12" :offset="10" style="margin-top: -15px; margin-left: 60px">
-                            <p style="font-size: 14px; height: 6px">车况正常</p>
+                            <p style="font-size: 14px; height: 6px">Normal</p>
                             <p style="font-size: 25px; height: 6px; color: #F09E18">{{(store.state.responses.car_data.price).toFixed(2)}}</p> 
                         </el-col>
                     </el-row>
@@ -57,7 +57,7 @@
                             <img style="width: 60px; height: 60px; object-fit: cover" :src='urlG' />
                         </el-col>
                         <el-col :span="12" :offset="10" style="margin-top: -15px; margin-left: 60px">
-                            <p style="font-size: 14px; height: 6px">车况差</p>   
+                            <p style="font-size: 14px; height: 6px">Bad Condition</p>   
                             <p style="font-size: 25px; height: 6px; color: #F09E18">{{(store.state.responses.car_data.price*0.95).toFixed(2)}}</p> 
                         </el-col>
                     </el-row>
@@ -69,21 +69,21 @@
                 </div>
             </el-col>
 <!-- 右边的临近价格预测 -->
-            <el-col class="infomain"  :span="5" :offset="1" style="margin-top: -25px">
+            <el-col class="infomain"  :span="6" :offset="1" style="margin-top: -25px">
                 <el-row>
-                    <p style="font-size: 15px; margin-left: 55px"><b>邻近价格预测</b></p>
+                    <p style="font-size: 15px; margin-left: 55px"><b>Prediction of Neighbors</b></p>
                 </el-row>
                 <el-row style="margin-top: -25px">
-                    <el-col>
+                    <el-col :span="5">
                         <el-row class="lower"></el-row>
                         <el-row class="middle"></el-row>
                         <el-row class="higher"></el-row>
                     </el-col>
-                    <el-col>
-                        <el-table :data="tableData" style="width: 100%">
-                            <el-table-column prop="date" label="Date" width="180" />
-                            <el-table-column prop="name" label="Name" width="180" />
-                            <el-table-column prop="address" label="Address" />
+                    <el-col :span="18" style="margin-top: -5px">
+                        <el-table :data="tableData" :show-header="false">
+                            <el-table-column prop="date" width="60" />
+                            <el-table-column prop="name" width="85" />
+                            <el-table-column prop="address" width="120"  />
                         </el-table>
                     </el-col>
                 </el-row>
@@ -101,7 +101,7 @@ import { defineComponent, reactive, ref, onMounted} from 'vue'
 import { useStore } from "vuex";
 import * as echarts from 'echarts';
 import axios, { Axios } from 'axios';
-
+import pinyin from 'js-pinyin'
 
 export default defineComponent({
     name: "InfomTab",
@@ -112,12 +112,82 @@ export default defineComponent({
     },
     setup(props) {
         const store = useStore(); 
-                   
+        const cv = (value) => {
+            if(value == '本田'){
+                return 'Honda'
+            }
+            else if(value == '大众'){
+                return 'Volkswagen'
+            }
+            else if(value == '丰田'){
+                return 'Toyota'
+            }
+            else if(value == '日产'){
+                return 'Nissan'
+            }
+            else if(value == '福特'){
+                return 'Ford'
+            }
+            else if(value == '宝马'){
+                return 'BMW'
+            }
+            else if(value == '奔驰'){
+                return 'Benz'
+            }
+            else if(value == '奥迪'){
+                return 'Audi'
+            }
+            else if(value == '现代'){
+                return 'Hyundai'
+            }
+            else if(value == '轿车'){
+                return 'Sedan'
+            }
+            else if(value == '跑车'){
+                return 'Sports Car'
+            }
+            else if(value == '敞篷车'){
+                return 'Roadster'
+            }
+            else if(value == '货车'){
+                return 'Van'
+            }
+            else if(value == '客车'){
+                return 'Bus'
+            }
+            else if(value == '手动'){
+                return 'Manual'
+            }
+            else if(value == '自动'){
+                return 'Automatic'
+            }
+            else if(value == '汽油'){
+                return 'Gasoline'
+            }
+            else if(value == '电动'){
+                return 'Electric'
+            }
+            else if(value == '混合动力'){
+                return 'Hybrid'
+            }
+            else if(value == '柴油'){
+                return 'Diesel'
+            }
+            else if(value == '天然气'){
+                return 'Natural Gas'
+            }
+            else if(value == '液化石油气'){
+                return 'LPG'
+            }
+            else{
+                return value
+            }
+        }           
             onMounted(() => { 
             let myChart = echarts.init(document.getElementById('container'));
             myChart.setOption({
                     title: {
-                        text: '预测一年内价格变化',
+                        text: 'Predicted price changes within one year',
                         x:'center',
                         textStyle:{
                             fontSize: 12,
@@ -143,12 +213,12 @@ export default defineComponent({
                         // axisLabel:{
                         //     formatter: '{value} w',
                         // },
-                        name: '单位：万'
+                        name: 'RMB'
                         
                     },
                     series: [
                         {
-                            name: '价格',
+                            name: 'price',
                             type: 'line',
                             data: store.state.responses.predict.price_data,
                             position: 'right',
@@ -169,6 +239,7 @@ export default defineComponent({
              
         return{
             store,
+            cv
             // brand,
             // km,
             // road_time,
@@ -195,7 +266,45 @@ export default defineComponent({
             hN: 6,
             mN: 2,
             lN: 3, 
-            dw: 'px',     
+            dw: 'px', 
+            tableData:
+                [{
+                    date: '4.2w',
+                    name: '5%lower',
+                    address: 'ShiYan'
+                },
+                {
+                    date: '4.3w',
+                    name: '2%lower',
+                    address: 'ChangDe'
+                },
+                {
+                    date: '4.5w',
+                    name: 'Same',
+                    address: 'XiAn'
+                },
+                {
+                    date: '4.6w',
+                    name: '1%higher',
+                    address: 'ShaoGuan'
+                },
+                {
+                    date: '4.8w',
+                    name: '2%higher',
+                    address: 'WuHan'
+                },
+                {
+                    date: '4.8w',
+                    name: '2%higher',
+                    address: 'QingYuan'
+                },
+                {
+                    date: '4.9w',
+                    name: '3%higher',
+                    address: 'HuiZhou'
+                },
+                
+                ]  
         }
     },
     methods:{
@@ -209,6 +318,9 @@ export default defineComponent({
         testtt(){
             console.log(this.hN+this.dw)
 
+        },
+        pinyinF(value){
+            return pinyin.getFullChars(value)
         }
     }
 })

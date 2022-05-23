@@ -9,7 +9,7 @@
       <el-row>{{t('login.qingshuru')}}</el-row>
   <!-- 手机号行 -->
       <el-row style="margin-top: -26px" >
-        <el-col :span='4'>
+        <!-- <el-col :span='4'>
             <el-select v-model="value" class="m-2" placeholder="区号">
           <el-option
            v-for="item in telPre"
@@ -18,9 +18,9 @@
           :value="item.value"
           />
           </el-select>
-        </el-col>
+        </el-col> -->
 
-        <el-col :span="19" :offset="1">
+        <el-col :span="19">
           <el-input v-model="userTelInput" :placeholder="t('login.shouji')" clearable />
         </el-col>
         
@@ -68,10 +68,10 @@
     <el-col :span="24">{{t('personalpage.touxiang')}}</el-col>
     <el-col :span="24">
       <!-- <el-avatar :size="100" :src="avatar_urlST" /> -->
-      <el-avatar :size="100" :src="avatar_urlST" />
+      <el-avatar :size="100" :src="this.store.state.userPicUrl" />
     </el-col>
     <el-col :span="24">
-      <input id = "uploadImg" type="file" style="text-rendering: 'shishi';" title="t('personalpage.xuanze')">
+      <input id = "uploadImg" type="file" title="t('personalpage.xuanze')">
       <input @click="submitImg" type="submit" :value="t('personalpage.shangchuan')">
     </el-col>
   </el-row>
@@ -158,8 +158,8 @@ export default defineComponent({
           userNameST: this.store.state.userName,
           avatar_urlST: props.avatar_url,
           // avatar_urlST: "https://muscar.oss-cn-guangzhou.aliyuncs.com/img/624ea63460026fb39e7ccc86.jpg",
-          value1: this.store.state.province,
-          value2: this.store.state.city,
+          value1: 'Beijing',
+          value2: 'FengTai',
           dialogTableVisible: false,
           value:'',
           userTelInput:'',
@@ -181,8 +181,8 @@ export default defineComponent({
 
         optionsPro : [
           {
-            value: 'Option1',
-            label: 'Option1',
+            value: 'Beijing',
+            label: 'Beijing',
           },
           {
             value: 'Option2',
@@ -204,8 +204,8 @@ export default defineComponent({
 
         optionsCity : [
           {
-            value: 'Option1',
-            label: 'Option1',
+            value: 'FengTai',
+            label: 'FengTai',
           },
           {
             value: 'Option2',

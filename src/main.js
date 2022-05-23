@@ -5,7 +5,7 @@ import store from './store'
 
 const app = createApp(App)
 
-
+import fun from './style/fun.js'
 // 集成ElementPlus
 import ElementPlus from 'element-plus';
 import locale from 'element-plus/lib/locale/lang/zh-cn'
@@ -24,3 +24,9 @@ app.use(store).use(router).mount("#app");
 app.config.globalProperties.$http = axios
 // app.use(Icon);
 app.use(ElementPlusIconsVue)
+app.use(fun)
+
+app.config.globalProperties.$cv = (value) => {
+    console.log("行不行啊")
+
+}

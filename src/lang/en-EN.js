@@ -8,7 +8,11 @@ module.exports = {
       qingdenglu: 'Login',
       zhuce: 'Login / Sign in',
       geren: 'Your Account',
-      tuichu: 'Logout'
+      tuichu: 'Logout',
+      xinxishuru: 'Information Input',
+      lishibaogao: 'History Reports',
+      lishituijian: 'History Recommendation',
+      
     },
     login:{
       xiugaishoujihao: 'Modify Mobile Number',
@@ -46,6 +50,7 @@ module.exports = {
       licheng: 'Mileage',
       jiaoyi: 'TradingArea',
       baojia: 'Price',
+      yusuan: 'Budget scope',
       caozuo: 'Operations',
       chakan: 'view',
       xiugai: 'revise',
@@ -54,7 +59,8 @@ module.exports = {
       querendia: 'Are you sure you want to delete current selected report?',
       querenduoxuan: 'Are you sure you want to delete all the selected reports?',
       quxiao: 'cancel',
-      queren: 'confirm'
+      queren: 'confirm',
+      tijiao: 'Submit Time',
     },
     hometab:{
       hotpinpai: 'Hot Brands',
@@ -75,5 +81,48 @@ module.exports = {
       benchi: 'Benz',
       aodi: 'Audi',
       xiandai: 'Hyundai'
+    },
+    bodytype:{
+      jiaoche: 'Sedan',
+      SUV: 'SUV',
+      MPV: 'MPV',
+      paoche: 'Sports Car',
+      changpeng: 'Roadster',
+      huoche:'Van',
+      keche: 'Bus'
+    },
+    fueltype:{
+      qiyou: 'Gasoline',
+      diandong: 'Electric',
+      hunhe: 'Hybrid',
+      chaiyou: 'Diesel',
+      tianran: 'Natural Gas',
+      yehua: 'LPG',
+      zidong: 'Automatic',
+      shoudong: 'Manual'
+    },
+    formlabel:{
+      qiche: 'Car Brand',
+      cheshen: 'Body Type',
+      ranyou: 'Fuel Type'
+    },
+    button:{
+      guzhi: 'Submit for recommendation'
+    },
+    alerts:{
+      xuanpinpai: '请选择汽车品牌',
+      xuancheshen: '请选择车身类型',
+      xuanyusuan: '请输入有效的预算'
+    },
+    reconinfo:{
+      zuobiaotou: 'Recent 5 years average transaction price',
+      zuobiaozuo: 'Year',
+      zuobiaoyou: 'Average price',
+      tou: 'Recommendations',
+      tubiaotou: 'Price change trend in the coming year',
+      tubiaoyou: 'trend curve',
+      youbiaotou: 'Most popular trade area in last year',
+      youbiaozuo: 'Location',
+      youbiaoyou: 'Average price'
     }
   }

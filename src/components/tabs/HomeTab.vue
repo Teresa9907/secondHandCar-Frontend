@@ -31,17 +31,19 @@
               </el-table> 
             </el-col>
           </el-row>
-
         </div>
+        <el-button @click="test">cvvv</el-button>
 </template>
 
 <script>
 
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted,getCurrentInstance } from "vue";
 import { ElMessage } from 'element-plus'
 import axios, { Axios } from 'axios';
 import { useStore } from "vuex";
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n';
+import pinyin from 'js-pinyin'
+import { el } from "element-plus/lib/locale";
 export default defineComponent({
   data(){
     return{
@@ -86,39 +88,39 @@ export default defineComponent({
 
       carData : [
         {
-          carSys: '大众新朗逸',
+          carSys: 'Volkswagen New Langyi',
           exNumC: '90'
         },
         {
-          carSys: '丰田卡罗拉',
+          carSys: 'Toyota Carola',
           exNumC: '85'
         },
         {
-          carSys: '丰田Cayenne',
+          carSys: 'Toyota        Cayenne',
           exNumC: '68'
         },
         {
-          carSys: '宝马5系',
+          carSys: 'BMW 5 Series',
           exNumC: '57'
         },
         {
-          carSys: '奔驰M级',
+          carSys: 'Benz M Series',
           exNumC: '51'
         },
         {
-          carSys: '大众途观',
+          carSys: 'Volkswagen  Touareg',
           exNumC: '32'
         },
         {
-          carSys: '本田思域',
+          carSys: 'Honda Civic',
           exNumC: '29'
         },
         {
-          carSys: '大众途乐',
+          carSys: 'Volkswagen Tourer',
           exNumC: '27'
         },
         {
-          carSys: '福特F150',
+          carSys: 'Ford F150',
           exNumC: '18'
         },
       ],
@@ -170,33 +172,36 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const {t} = useI18n();
-    onMounted(() => {
-            // var FormData = require('form-data');
-            // var data = new FormData();
-            // data.append('id', '88');
-            // const that = this;
+    // const pinyin = require('js-pinyin');
+    
 
-            // var config = {
-            //   method: 'post',
-            //   url: 'api/get_user_car_es_by_id',
-            //   data : data
-            // };
+    // reconinfo右边的表格
+    onMounted(() => { 
+            axios
+            .get('/api/get_area_price')
 
-            // axios(config).then(function (response) {
-            //   store.commit('setResponses',response.data.data)
-            //   console.log(response);
-            // })
-            // .catch(function (error) {
-            //   console.log(error);
-            // });
-            });   
+            .then(function(response){
+                console.log(response)
+                // console.log(response.data.data)
+                // store.commit('setHistorys',response.data.data)
+            })  
+            .catch(function (error) { // 请求失败处理
+                console.log(error);
+            })
+        }); 
             return{
-              store,t
+              store,t,
+              
             }
   },
   props: {
     
   },
+  methods:{
+    test(){
+      console.log(this.cv('手动'))
+    }
+  }
   })
 </script>
 

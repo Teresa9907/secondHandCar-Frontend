@@ -11,7 +11,7 @@
             <!-- :default-sort = "{prop: 'date', order: 'descending'}" -->
             <el-table-column align="left">
                 <template #header>
-                    <el-button type="danger" @click="multiDeletion" plain>选中删除</el-button>
+                    <el-button type="danger" @click="multiDeletion" plain>{{t('historytab.xuanzhong')}}</el-button>
                 </template>
             <el-table-column
                 type="selection"
@@ -19,53 +19,53 @@
             </el-table-column>
             <el-table-column
             prop="brand"
-            label="品牌"
+            :label="t('historytab.pinpai')"
             width="100">
             </el-table-column>
             <el-table-column
             prop="car_type"
-            label="车身类型"
+            :label="t('historytab.cheshen')"
             width="100">
             </el-table-column>
             <el-table-column
             prop="oil_type"
-            label="燃油类型"
+            :label="t('historytab.ranyou')"
             width="100">
             </el-table-column>
             <el-table-column
             prop="mt_type"
-            label="变速箱"
-            width="100">
+            :label="t('historytab.biansu')"
+            width="130">
             </el-table-column>
             <el-table-column
             prop="road_time"
-            label="上牌时间"
-            width="100">
+            :label="t('historytab.shangpai')"
+            width="130">
             </el-table-column>
             <el-table-column
             prop="km"
-            label="里程"
-            width="100">
+            :label="t('historytab.licheng')"
+            width="80">
             </el-table-column>
             <el-table-column
             prop="location"
-            label="交易地区"
+            :label="t('historytab.jiaoyi')"
             width="180">
             </el-table-column>
             <el-table-column
             prop="price"
-            label="报价"
+            :label="t('historytab.baojia')"
             sortable
             width="100">
             </el-table-column>
-            <el-table-column label="操作" width="180">
+            <el-table-column :label="t('historytab.caozuo')" width="150">
                 <template #default="scope">
                     <el-button type="text" size="small" @click="handleEdit(scope.row)"
-                    >查看</el-button>
+                    >{{t('historytab.chakan')}}</el-button>
                     <el-button type="text" size="small" @click="handleChange(scope.$index, scope.row)"
-                    >修改</el-button>
+                    >{{t('historytab.xiugai')}}</el-button>
                     <el-button type="text" size="small" @click="handleDelete(scope.$index, scope.row)"
-                    >删除</el-button>
+                    >{{t('historytab.shanchu')}}</el-button>
                 </template>
                 
             </el-table-column>
@@ -96,27 +96,124 @@ import ProvinceCityCountry from '../../assets/json/address'
 import { useStore } from "vuex";
 import axios, { Axios } from 'axios';
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useI18n } from 'vue-i18n'
+import pinyin from 'js-pinyin'
 
 
 export default defineComponent({
     name: "HistoryTab",
     setup() {
+        const {t} = useI18n();
         const store = useStore();
+        var brands
+        const cv = (value) => {
+            if(value == '本田'){
+                return 'Honda'
+            }
+            else if(value == '大众'){
+                return 'Volkswagen'
+            }
+            else if(value == '丰田'){
+                return 'Toyota'
+            }
+            else if(value == '日产'){
+                return 'Nissan'
+            }
+            else if(value == '福特'){
+                return 'Ford'
+            }
+            else if(value == '宝马'){
+                return 'BMW'
+            }
+            else if(value == '奔驰'){
+                return 'Benz'
+            }
+            else if(value == '奥迪'){
+                return 'Audi'
+            }
+            else if(value == '现代'){
+                return 'Hyundai'
+            }
+            else if(value == '轿车'){
+                return 'Sedan'
+            }
+            else if(value == '跑车'){
+                return 'Sports Car'
+            }
+            else if(value == '敞篷车'){
+                return 'Roadster'
+            }
+            else if(value == '货车'){
+                return 'Van'
+            }
+            else if(value == '客车'){
+                return 'Bus'
+            }
+            else if(value == '手动'){
+                return 'Manual'
+            }
+            else if(value == '自动'){
+                return 'Automatic'
+            }
+            else if(value == '汽油'){
+                return 'Gasoline'
+            }
+            else if(value == '电动'){
+                return 'Electric'
+            }
+            else if(value == '混合动力'){
+                return 'Hybrid'
+            }
+            else if(value == '柴油'){
+                return 'Diesel'
+            }
+            else if(value == '天然气'){
+                return 'Natural Gas'
+            }
+            else if(value == '液化石油气'){
+                return 'LPG'
+            }
+            else{
+                return value
+            }
+        }
         onMounted(() => { 
+            const that = this
             axios
             .get('/api/get_user_car_list')
 
             .then(function(response){
-                console.log(response.data.data)
-                store.commit('setHistorys',response.data.data)
+                store.commit('setHistorys',Array.from(response.data.data))
+                console.log(store.state.historys[0])
+                for (var i=0;i<store.state.historys.length;i++){
+                    store.state.historys[i].brand=cv(store.state.historys[i].brand)
+                }
+                for (var j=0;j<store.state.historys.length;j++){
+                    store.state.historys[j].car_type=cv(store.state.historys[j].car_type)
+                }
+                for (var q=0;q<store.state.historys.length;q++){
+                    store.state.historys[q].mt_type=cv(store.state.historys[q].mt_type)
+                }
+                for (var w=0;w<store.state.historys.length;w++){
+                    store.state.historys[w].oil_type=cv(store.state.historys[w].oil_type)
+                }
+                for (var e=0;e<store.state.historys.length;e++){
+                    store.state.historys[e].location=pinyin.getFullChars(store.state.historys[e].location.split(/['省','市','区']/)[2])+' District '+pinyin.getFullChars(store.state.historys[e].location.split(/['省','市','区']/)[1])+' City '+pinyin.getFullChars(store.state.historys[e].location.split(/['省','市','区']/)[0]) + ' Province'
+                }
+                for (var r=0;r<store.state.historys.length;r++){
+                    store.state.historys[r].road_time=store.state.historys[r].road_time.slice(0,10)
+                }
+                
             })  
-            .catch(function (error) { // 请求失败处理
+            .catch(function (error) { // 请求失败处理 =cv(store.state.historys[e].oil_type)
                 console.log(error);
             })
         });
         
         return{
-            store
+            store,
+            t,cv,
+            brands
         }
         
     },
@@ -136,11 +233,11 @@ export default defineComponent({
         multiDeletion(){
             var idsInfo = ''
             ElMessageBox.confirm(
-                '确认删除？',
+                this.t('historytab.querenduoxuan'),
                 'Warning',
                 {
-                confirmButtonText: '确认',
-                cancelButtonText: '取消',
+                confirmButtonText: this.t('historytab.queren'),
+                cancelButtonText: this.t('historytab.quxiao'),
                 type: 'warning',
                 }
             )
@@ -225,6 +322,7 @@ export default defineComponent({
         },
         handleChange(index,row){
             // this.store.commit('setHis2info', row)
+            this.store.commit('setcreate_id',row.id)
             this.responseFake.car_data=row
             this.store.commit('setResponses',this.responseFake)
             console.log(this.store.state.responses)
@@ -238,11 +336,11 @@ export default defineComponent({
             // ids.push(14)
             
             ElMessageBox.confirm(
-                '确认删除？',
+                this.t('historytab.querendia'),
                 'Warning',
                 {
-                confirmButtonText: '确认',
-                cancelButtonText: '取消',
+                confirmButtonText: this.t('historytab.queren'),
+                cancelButtonText: this.t('historytab.quxiao'),
                 type: 'warning',
                 }
             )
@@ -315,7 +413,7 @@ export default defineComponent({
 
 <style scoped>
 .historymain{
-    margin-left: 5%;
+    margin-left: 3%;
     margin-top: 50px;
 }
 .demo-pagination-block{

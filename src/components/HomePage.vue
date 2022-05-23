@@ -43,11 +43,11 @@
                   >{{t('header.shouye')}}</el-menu-item>
                  <!-- @click="tabChange('InfomTab')", 放下边空行的 -->
                  <el-menu-item
-                  @click="tabChange('InfomTab')"
+                  @click="tabChange('SellTab')"
                   index="3">{{t('header.mai3che')}}</el-menu-item>
                 <!-- <el-menu-item index="3" disabled>Info</el-menu-item> -->
                 <el-menu-item index="4"
-                @click="tabChange('SellTab')">{{t('header.mai4che')}}</el-menu-item>
+                @click="tabChange('BuyTab')">{{t('header.mai4che')}}</el-menu-item>
     </el-menu>
             </el-col>
 <!-- 中英切换 -->
@@ -148,9 +148,18 @@
           </template>
           <template v-else-if="this.store.state.pageState === 'SellTabb'">
               <SellTabb></SellTabb>
-          </template>         
+          </template>  
+          <template v-else-if="this.store.state.pageState === 'BuyTabb'">
+              <BuyTabb></BuyTabb>
+          </template>        
           <template v-else-if="this.store.state.pageState === 'InfomTab'">
               <InfomTab></InfomTab>
+        </template>
+        <template v-else-if="this.store.state.pageState === 'ReconInfo'">
+              <ReconInfo></ReconInfo>
+        </template>
+        <template v-else-if="this.store.state.pageState === 'BuyTab'">
+              <BuyTab></BuyTab>
         </template>
         <!-- <history-tab></history-tab> -->
         <!-- <el-button @click="test">try</el-button> -->
@@ -206,7 +215,7 @@
 
 
 <!-- <el-button @click="getUserInfo" :disabled="buttonState"  type="primary">输出</el-button> -->
-<el-button @click="test"></el-button>
+<!-- <el-button @click="test"></el-button> -->
       </el-main>
 <!-- 页脚 -->
       <el-footer >
@@ -253,10 +262,13 @@ import { ElMessage } from 'element-plus'
 import PersonalPage from '../components/PersonalPage.vue'
 import HomeTab from '../components/tabs/HomeTab.vue'
 import SellTab from '../components/tabs/SellTab.vue'
+import ReconInfo from '../components/tabs/ReconInfo.vue'
 import SellTabb from '../components/tabs/SellTabb.vue'
 import { useI18n } from 'vue-i18n'
 import InfomTab from '../components/tabs/InfomTab.vue'
 import HistoryTab from '../components/tabs/HistoryTab.vue'
+import BuyTab from '../components/tabs/BuyTab.vue'
+import BuyTabb from '../components/tabs/BuyTabb.vue'
 import { useStore } from "vuex";
 export default defineComponent({
   components: { 
@@ -265,7 +277,10 @@ export default defineComponent({
     SellTab,
     InfomTab,
     HistoryTab,
-    SellTabb
+    SellTabb,
+    BuyTab,
+    ReconInfo,
+    BuyTabb,
     },
   name: "HomePage",
   setup() {
@@ -376,7 +391,7 @@ export default defineComponent({
         });
         that.dialogTableVisible = false
         ElMessage({
-              message: '登录成功！',
+              message: 'Success!',
               type: 'success',
           })
       },
@@ -412,7 +427,7 @@ export default defineComponent({
             // that.buttonText = "(" + that.buttonTime + '秒)后重新发送';
 						--that.buttonTime;
 						if(that.buttonTime < 0) {
-							that.buttonText = "重新发送";
+							that.buttonText = "Resend OTP";
 							that.buttonTime = 10;
 							that.buttonState = false;
 							window.clearInterval(interval);

@@ -4,7 +4,7 @@
     <div>
          <el-row >
             <el-col :span="8" :offset="7">
-                <el-divider content-position="center"><b>填写车况</b></el-divider>
+                <el-divider content-position="center"><b>{{t('header.xinxishuru')}}</b></el-divider>
             </el-col>
          </el-row>       
     </div>
@@ -20,73 +20,103 @@
             :label-position="right"
             >
             <!-- :inline="true" -->
-                <el-form-item label="汽车品牌：" prop="carBand">
-                    <el-select v-model="formInline.carBand" placeholder="请选择">
-                        <el-option label="本田" value="本田" />
-                        <el-option label="丰田" value="丰田" />
-                        <el-option label="大众" value="大众" />
-                        <el-option label="日产" value="日产" />
-                        <el-option label="福特" value="福特" />
-                        <el-option label="宝马" value="宝马" />
-                        <el-option label="奔驰" value="奔驰" />
-                        <el-option label="奥迪" value="奥迪" />
-                        <el-option label="现代" value="现代" />
+                <el-form-item :label="t('historytab.pinpai')" prop="carBand">
+                    <el-select v-model="formInline.carBand" placeholder="please select..">
+                        <el-option :label="t('brands.bentian')" value="本田" />
+                        <el-option :label="t('brands.fengtian')" value="丰田" />
+                        <el-option :label="t('brands.dazhong')" value="大众" />
+                        <el-option :label="t('brands.richan')" value="日产" />
+                        <el-option :label="t('brands.fute')" value="福特" />
+                        <el-option :label="t('brands.baoma')" value="宝马" />
+                        <el-option :label="t('brands.benchi')" value="奔驰" />
+                        <el-option :label="t('brands.aodi')" value="奥迪" />
+                        <el-option :label="t('brands.xiandai')" value="现代" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="车身类型：" prop="carBodyType">
+                <el-form-item :label="t('historytab.cheshen')" prop="carBodyType">
                     <el-radio-group v-model="formInline.carBodyType" size="large">
-                        <el-radio label="轿车"/>
-                        <el-radio label="SUV" />
-                        <el-radio label="MPV" />
-                        <el-radio label="跑车" />
-                        <el-radio label="敞篷车" />
-                        <el-radio label="货车" />
-                        <el-radio label="客车" />
+                        <el-radio label="轿车">
+                            {{t('bodytype.jiaoche')}}
+                        </el-radio>
+                        <el-radio label="SUV">
+                            {{t('bodytype.SUV')}}
+                        </el-radio>
+                        <el-radio label="MPV">
+                            {{t('bodytype.MPV')}}
+                        </el-radio>
+                        <el-radio label="跑车">
+                            {{t('bodytype.paoche')}}
+                        </el-radio>
+                        <el-radio label="敞篷">
+                            {{t('bodytype.changpeng')}}
+                        </el-radio>
+                        <el-radio label="货车">
+                            {{t('bodytype.huoche')}}
+                        </el-radio>
+                        <el-radio label="客车">
+                            {{t('bodytype.keche')}}
+                        </el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="燃油类型：" prop="carBurnType">
+                <el-form-item :label="t('historytab.ranyou')" prop="carBurnType">
                     <el-radio-group v-model="formInline.carBurnType" size="large">
-                        <el-radio label="汽油" />
-                        <el-radio label="电动" />
-                        <el-radio label="混合动力" />
-                        <el-radio label="柴油" />
-                        <el-radio label="天然气" />
-                        <el-radio label="液化石油气" />
+                        <el-radio label="汽油">
+                            {{t('fueltype.qiyou')}}
+                        </el-radio>
+                        <el-radio label="电动">
+                            {{t('fueltype.diandong')}}
+                        </el-radio>
+                        <el-radio label="混合动力">
+                            {{t('fueltype.hunhe')}}
+                        </el-radio>
+                        <el-radio label="柴油">
+                            {{t('fueltype.chaiyou')}}
+                        </el-radio>
+                        <el-radio label="天然气">
+                            {{t('fueltype.tianran')}}
+                        </el-radio>
+                        <el-radio label="液化石油气">
+                            {{t('fueltype.yehua')}}
+                        </el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="变速箱：" prop="carDangType">
+                <el-form-item :label="t('historytab.biansu')" prop="carDangType">
                     <el-radio-group v-model="formInline.carDangType" size="large">
-                        <el-radio label="自动" />
-                        <el-radio label="手动" />
+                        <el-radio label="自动">
+                            {{t('fueltype.zidong')}}
+                        </el-radio>
+                        <el-radio label="手动">
+                            {{t('fueltype.shoudong')}}
+                        </el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="上牌时间：" prop="ticketTime">
+                <el-form-item :label="t('historytab.shangpai')" prop="ticketTime">
                     <el-date-picker
                         v-model="formInline.ticketTime"
                         type="month"
-                        placeholder="选择日期"
+                        placeholder="select date"
                         value-format="YYYY-MM-DD"
                         />
                 </el-form-item>
-                <el-form-item label="行驶里程：" prop="runKiloM">
-                    <el-input v-model.number="formInline.runKiloM" placeholder="请输入" style="width: 20%">
-                        <template #append>万公里</template>
+                <el-form-item :label="t('historytab.licheng')" prop="runKiloM">
+                    <el-input v-model.number="formInline.runKiloM" placeholder="please input.." style="width: 23%">
+                        <template #append>10k km</template>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="交易地区：" prop="regionSelect">
-                    <el-select v-model="data.provinceObj" placeholder="请选择" @change="provinceChange" value-key="name">
-                        <el-option v-for="(item, index) in data.provinceData" :key="index" :label="item.name" :value="item"></el-option>
+                <el-form-item :label="t('historytab.jiaoyi')" prop="regionSelect">
+                    <el-select v-model="data.provinceObj" placeholder="select.." @change="provinceChange" value-key="name">
+                        <el-option v-for="(item, index) in data.provinceData" :key="index" :label="this.getChars(item.name)" :value="item"></el-option>
                     </el-select>&nbsp;&nbsp;
-                    <el-select v-model="data.cityObj" placeholder="请选择" @change="cityChange" value-key="name">
-                        <el-option v-for="(item, index) in data.cityData" :key="index" :label="item.name" :value="item"></el-option>
+                    <el-select v-model="data.cityObj" placeholder="select.." @change="cityChange" value-key="name">
+                        <el-option v-for="(item, index) in data.cityData" :key="index" :label="this.getChars(item.name)" :value="item"></el-option>
                     </el-select>&nbsp;&nbsp;
-                    <el-select v-model="data.countryObj" placeholder="请选择" @change="countryChange" value-key="name">
-                        <el-option v-for="(item, index) in data.countryData" :key="index" :label="item.name" :value="item"></el-option>
+                    <el-select v-model="data.countryObj" placeholder="select.." @change="countryChange" value-key="name">
+                        <el-option v-for="(item, index) in data.countryData" :key="index" :label="this.getChars(item.name)" :value="item"></el-option>
                     </el-select>&nbsp;&nbsp;
                 </el-form-item>
                 
                 <el-form-item>
-                <el-button type="primary" @click="onSubmit(formInline)">查看估值报告</el-button>
+                <el-button type="primary" @click="onSubmit(formInline)">Submit For Valuation</el-button>
                 </el-form-item>
         </el-form>
         <!-- <el-button @click="printCarBand"></el-button> -->
@@ -95,7 +125,7 @@
     <div class="historyMain">
          <el-row >
             <el-col :span="8" :offset="7">
-                <el-divider content-position="center"><b>历史估值</b></el-divider>
+                <el-divider content-position="center"><b>History Report</b></el-divider>
             </el-col>
          </el-row> 
 
@@ -108,53 +138,53 @@
             <!-- :default-sort = "{prop: 'date', order: 'descending'}" -->
             <el-table-column
             prop="brand"
-            label="品牌"
+            label="Brand"
             width="100">
             </el-table-column>
             <el-table-column
             prop="car_type"
-            label="车身类型"
+            label="BodyType"
             width="100">
             </el-table-column>
             <el-table-column
             prop="oil_type"
-            label="燃油类型"
+            label="FuelType"
             width="100">
             </el-table-column>
             <el-table-column
             prop="mt_type"
-            label="变速箱"
-            width="100">
+            label="Transmission"
+            width="120">
             </el-table-column>
             <el-table-column
             prop="road_time"
-            label="上牌时间"
-            width="100">
+            label="Liscence Time"
+            width="130">
             </el-table-column>
             <el-table-column
             prop="km"
-            label="里程"
+            label="Mileage"
             width="100">
             </el-table-column>
             <el-table-column
             prop="location"
-            label="交易地区"
+            label="Trade Area"
             width="180">
             </el-table-column>
             <el-table-column
             prop="price"
-            label="报价"
+            label="Price"
             sortable
             width="100">
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="Operations">
                 <template #default="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
-                    >查看详情</el-button>
+                    <el-button type="text" size="small" @click="handleEdit(scope.$index, scope.row)"
+                    >view</el-button>
                 </template>
             </el-table-column>
         </el-table>  
-        <el-button @click="testtt">try</el-button>    
+        <!-- <el-button @click="testtt">try</el-button>     -->
     </div>
 
 
@@ -168,7 +198,8 @@ import ProvinceCityCountry from '../../assets/json/address'
 import History from '../../assets/json/history'
 import { useStore } from "vuex";
 import axios, { Axios } from 'axios';
-
+import { useI18n } from 'vue-i18n'
+import pinyin from 'js-pinyin'
 export default defineComponent({
     components: {
         
@@ -224,28 +255,28 @@ export default defineComponent({
                 carBand:[
                     {
                     required: true,
-                    message: '请选择汽车品牌',
+                    message: 'Please enter a valid value',
                     trigger: 'change',
                     },
                 ],
                 carBodyType:[
                     {
                     required: true,
-                    message: '请选择车身类型',
+                    message: 'Please enter a valid value',
                     trigger: 'change',
                     },
                 ],
                 carBurnType:[
                     {
                     required: true,
-                    message: '请选择燃油类型',
+                    message: 'Please enter a valid value',
                     trigger: 'change',
                     },
                 ],
                 carDangType:[
                     {
                     required: true,
-                    message: '请选择变速箱类型',
+                    message: 'Please enter a valid value',
                     trigger: 'change',
                     },
                 ],
@@ -253,13 +284,13 @@ export default defineComponent({
                     {
                     type: 'date',
                     required: true,
-                    message: '请选择上牌时间',
+                    message: 'Please enter a valid value',
                     trigger: 'change',
                     },
                 ],
                 runKiloM:[
-                    { required: true, message: '请输入行驶里程', trigger: 'blur' },
-                    { type: 'number', min: 0, max: 999, message: '请输入正确格式，最多含3位整数，2位小数', trigger: 'blur' },
+                    { required: true, message: 'Please enter a valid value', trigger: 'blur' },
+                    { type: 'number', min: 0, max: 999, message: 'Please enter a valid value, up to 3 integers and 2 decimal places', trigger: 'blur' },
                 ],
                 // regionSelect:[
                 //     {
@@ -273,6 +304,7 @@ export default defineComponent({
         }
     },
     setup() {
+        const {t} = useI18n();
         const store = useStore();
         const data = reactive({
         provinceObj: {name: ''},
@@ -310,6 +342,7 @@ export default defineComponent({
         cityChange,
         countryChange,
         store,
+        t
         // historydata
         }        
     },
@@ -324,6 +357,9 @@ export default defineComponent({
         testtt(){
             this.store.commit('setState', 10)
             console.log(this.store.state.count)
+        },
+        getChars(value){
+            return(pinyin.getFullChars(value))
         },
 // 表单校验
         async onSubmit() {
@@ -372,6 +408,7 @@ export default defineComponent({
                     data2.append('id',response.data.data.id)
                     await axios(config2).then(function (response) {
                     that.store.commit('setResponses',response.data.data)
+                    console.log("返回值返回值")
                     console.log(response.data.data);
                     console.log(that.store.state.responses)
             //         console.log(response.car_data.brand)

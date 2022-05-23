@@ -17,6 +17,7 @@
     "element-plus": "^2.1.2",
     "elui-china-area-dht": "^2.0.0",
     "form-data": "^4.0.0",
+    "js-pinyin": "^0.1.9",
     "mockjs": "^1.1.0",
     "pinia": "^2.0.13",
     "viser-vue": "^2.4.8",

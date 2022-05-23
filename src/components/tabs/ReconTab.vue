@@ -2,7 +2,7 @@
     <div class="historymain">
         
         <el-table
-            :data="Array.from(this.store.state.historys).slice(10*this.currentPage-10,10*this.currentPage)"
+            :data="Array.from(this.store.state.recons).slice(10*this.currentPage-10,10*this.currentPage)"
             style="width: 100%"
             :size="mini"
             :highlight-current-row="true"
@@ -11,7 +11,7 @@
             <!-- :default-sort = "{prop: 'date', order: 'descending'}" -->
             <el-table-column align="left">
                 <template #header>
-                    <el-button type="danger" @click="multiDeletion" plain>选中删除</el-button>
+                    <el-button type="danger" @click="multiDeletion" plain>{{t('historytab.xuanzhong')}}</el-button>
                 </template>
             <el-table-column
                 type="selection"
@@ -19,53 +19,34 @@
             </el-table-column>
             <el-table-column
             prop="brand"
-            label="品牌"
-            width="100">
+            :label="t('historytab.pinpai')"
+            width="120">
             </el-table-column>
             <el-table-column
             prop="car_type"
-            label="车身类型"
-            width="100">
+            :label="t('historytab.cheshen')"
+            width="150">
             </el-table-column>
             <el-table-column
-            prop="oil_type"
-            label="燃油类型"
-            width="100">
+            prop="user_id"
+            :label="t('historytab.yusuan')"
+            width="200">
             </el-table-column>
             <el-table-column
-            prop="mt_type"
-            label="变速箱"
-            width="100">
-            </el-table-column>
-            <el-table-column
-            prop="road_time"
-            label="上牌时间"
-            width="100">
-            </el-table-column>
-            <el-table-column
-            prop="km"
-            label="里程"
-            width="100">
-            </el-table-column>
-            <el-table-column
-            prop="location"
-            label="交易地区"
-            width="180">
-            </el-table-column>
-            <el-table-column
-            prop="price"
-            label="报价"
+            prop="create_time"
+            :label="t('historytab.tijiao')"
             sortable
-            width="100">
+            width="250">
             </el-table-column>
-            <el-table-column label="操作" width="180">
+            
+            <el-table-column :label="t('historytab.caozuo')" width="200">
                 <template #default="scope">
                     <el-button type="text" size="small" @click="handleEdit(scope.row)"
-                    >查看</el-button>
+                    >{{t('historytab.chakan')}}</el-button>
                     <el-button type="text" size="small" @click="handleChange(scope.$index, scope.row)"
-                    >修改</el-button>
+                    >{{t('historytab.xiugai')}}</el-button>
                     <el-button type="text" size="small" @click="handleDelete(scope.$index, scope.row)"
-                    >删除</el-button>
+                    >{{t('historytab.shanchu')}}</el-button>
                 </template>
                 
             </el-table-column>
@@ -91,23 +72,28 @@
 
 <script>
 import { defineComponent, reactive, onMounted} from 'vue'
+import History from '../../assets/json/history'
+import ProvinceCityCountry from '../../assets/json/address'
 import { useStore } from "vuex";
 import axios, { Axios } from 'axios';
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useI18n } from 'vue-i18n'
+import ReconInfoVue from './ReconInfo.vue';
 
 
 export default defineComponent({
     name: "ReconTab",
     setup() {
+        const {t} = useI18n();
         const store = useStore();
-        console.log("no display")
         onMounted(() => { 
             axios
-            .get('/api/get_user_car_list')
+            .get('/api/get_user_car_rec_list')
 
             .then(function(response){
+                console.log(response)
                 console.log(response.data.data)
-                store.commit('setHistorys',response.data.data)
+                store.commit('setRecons',response.data.data)
             })  
             .catch(function (error) { // 请求失败处理
                 console.log(error);
@@ -115,7 +101,8 @@ export default defineComponent({
         });
         
         return{
-            store
+            store,
+            t
         }
         
     },
@@ -124,8 +111,9 @@ export default defineComponent({
             data: { historyData: this.store.state.historys},
             currentPage: '1',
             multipleSelection: [],
-            sellTabb: 'SellTabb',
+            buyTabb: 'BuyTabb',
             infomTab: 'InfomTab',
+            reconInfo: 'ReconInfo',
             deleteArr: [],  
             responseFake:{car_data: Object},        
         }
@@ -135,11 +123,11 @@ export default defineComponent({
         multiDeletion(){
             var idsInfo = ''
             ElMessageBox.confirm(
-                '确认删除？',
+                this.t('historytab.querenduoxuan'),
                 'Warning',
                 {
-                confirmButtonText: '确认',
-                cancelButtonText: '取消',
+                confirmButtonText: this.t('historytab.queren'),
+                cancelButtonText: this.t('historytab.quxiao'),
                 type: 'warning',
                 }
             )
@@ -203,7 +191,7 @@ export default defineComponent({
 
             var config = {
               method: 'post',
-              url: 'api/get_user_car_es_by_id',
+              url: 'api/get_user_car_rec_by_id',
               data : data
             };
 
@@ -214,7 +202,7 @@ export default defineComponent({
         //         console.log(response.car_data.brand)
         //         // that.store.commit('setResponses', response.data.data)
         //         console.log(that.store.state.responses.car_data)
-                that.store.commit('setPageState', that.infomTab)
+                that.store.commit('setPageState', that.reconInfo)
             })
             .catch(function (error) {
               console.log(error);
@@ -223,12 +211,9 @@ export default defineComponent({
 
         },
         handleChange(index,row){
-            // this.store.commit('setHis2info', row)
-            this.responseFake.car_data=row
-            this.store.commit('setResponses',this.responseFake)
-            console.log(this.store.state.responses)
-            this.store.commit('setPageState', this.sellTabb)
-
+            this.store.commit('setcreate_id',row.id)
+            this.store.commit('setResponses',row)
+            this.store.commit('setPageState', this.buyTabb)
         },
         handleDelete(index,row){
             var ids = []
@@ -237,11 +222,11 @@ export default defineComponent({
             // ids.push(14)
             
             ElMessageBox.confirm(
-                '确认删除？',
+                this.t('historytab.querendia'),
                 'Warning',
                 {
-                confirmButtonText: '确认',
-                cancelButtonText: '取消',
+                confirmButtonText: this.t('historytab.queren'),
+                cancelButtonText: this.t('historytab.quxiao'),
                 type: 'warning',
                 }
             )
@@ -260,7 +245,7 @@ export default defineComponent({
 
                     var config = {
                     method: 'post',
-                    url: 'api/delete_es',
+                    url: 'api/delete_rec',
                     data : data
                     };
 
@@ -314,7 +299,7 @@ export default defineComponent({
 
 <style scoped>
 .historymain{
-    margin-left: 5%;
+    margin-left: 10%;
     margin-top: 50px;
 }
 .demo-pagination-block{

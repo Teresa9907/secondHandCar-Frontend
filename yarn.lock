@@ -5880,6 +5880,11 @@
   "resolved" "https://registry.npmjs.org/js-message/-/js-message-1.0.7.tgz"
   "version" "1.0.7"
 
+"js-pinyin@^0.1.9":
+  "integrity" "sha1-zfGTNWRd2yDUYw3xBYqsJdJWrf0="
+  "resolved" "https://registry.npmjs.org/js-pinyin/-/js-pinyin-0.1.9.tgz"
+  "version" "0.1.9"
+
 "js-queue@2.0.2":
   "integrity" "sha512-pbKLsbCfi7kriM3s1J4DDCo7jQkI58zPLHi0heXPzPlj0hjUsm+FesPUbE0DSbIVIK503A36aUBoCN7eMFedkA=="
   "resolved" "https://registry.npmjs.org/js-queue/-/js-queue-2.0.2.tgz"
